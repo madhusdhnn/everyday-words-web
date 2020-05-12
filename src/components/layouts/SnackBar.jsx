@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {IconButton, Snackbar, Slide, withStyles} from '@material-ui/core';
+import {IconButton, Slide, Snackbar, withStyles} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from 'prop-types';
 import {removeSnackbar} from '../../actions/snackbar-actions';
@@ -34,26 +34,24 @@ class SnackBar extends Component {
    render() {
       const {classes, snackbar} = this.props;
       return (
-         <div>
-            <Snackbar
-               open={snackbar.open}
-               message={snackbar.message}
-               autoHideDuration={6000}
-               disableWindowBlurListener
-               onClose={this.handleClose}
-               className={classes.snackbar}
-               TransitionComponent={this.slideTransition}
-               anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center'
-               }}
-               action={
-                  <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
-                     <CloseIcon fontSize="small" />
-                  </IconButton>
-               }
-            />
-         </div>
+         <Snackbar
+            open={snackbar.open}
+            message={snackbar.message}
+            autoHideDuration={6000}
+            disableWindowBlurListener
+            onClose={this.handleClose}
+            className={classes.snackbar}
+            TransitionComponent={this.slideTransition}
+            anchorOrigin={{
+               vertical: 'bottom',
+               horizontal: 'center'
+            }}
+            action={
+               <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                  <CloseIcon fontSize="small" />
+               </IconButton>
+            }
+         />
       );
    }
 }

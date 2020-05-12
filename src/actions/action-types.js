@@ -1,10 +1,9 @@
 export const SET_IDENTITY = 'SET_IDENTITY';
 export const CLEAR_IDENTITY = 'CLEAR_IDENTITY';
-export const UPDATE_IDENTITY = 'UPDATE_IDENTITY';
 export const SET_WORDS = 'SET_WORDS';
+export const ADD_WORD = 'ADD_WORD';
+export const CLEAR_WORD = 'CLEAR_WORD';
 export const CLEAR_WORDS = 'CLEAR_WORDS';
-export const SHOW_SPINNER = 'SHOW_SPINNER';
-export const HIDE_SPINNER = 'HIDE_SPINNER';
 export const SNACKBAR_ERROR = 'SNACKBAR_ERROR';
 export const SNACKBAR_WARNING = 'SNACKBAR_WARNING';
 export const SNACKBAR_SUCCESS = 'SNACKBAR_SUCCESS';

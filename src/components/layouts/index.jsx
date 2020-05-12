@@ -5,6 +5,8 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import Spinner from './Spinner';
 import SnackBar from './SnackBar';
 import NavBar from './NavBar';
+import Auth from '../containers/Auth';
+import Copyright from './Copyright';
 
 const style = {width: '100%'};
 
@@ -14,10 +16,13 @@ class Layout extends Component {
          <ThemeProvider theme={theme}>
             <Spinner />
             <SnackBar />
-            <NavBar />
-            <div style={style}>
-               {this.props.children}
-            </div>
+            <Auth>
+               <NavBar />
+               <div style={style}>
+                  {this.props.children}
+               </div>
+            </Auth>
+            <Copyright />
          </ThemeProvider>
       );
    }

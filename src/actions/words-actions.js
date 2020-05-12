@@ -1,23 +1,4 @@
-import {CLEAR_IDENTITY, CLEAR_WORDS, SET_IDENTITY, SET_WORDS, UPDATE_IDENTITY} from './action-types';
-
-const setIdentity = (data) => {
-   return {
-      type: SET_IDENTITY,
-      data: data
-   };
-};
-
-const clearIdentity = () => {
-   return {
-      type: CLEAR_IDENTITY
-   };
-};
-
-const updateIdentity = () => {
-   return {
-      type: UPDATE_IDENTITY
-   };
-};
+import {CLEAR_WORDS, SET_WORDS} from './action-types';
 
 const setWords = data => {
    return {
@@ -32,7 +13,12 @@ const clearWords = () => {
    };
 };
 
+const addWord = (data) => {
+   return (dispatch, {getFirebase, getFirestore}) => {
+   };
+};
+
 export {
-   clearIdentity,
+   addWord,
    clearWords
 };

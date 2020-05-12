@@ -8,9 +8,9 @@ import {withTheme} from '@material-ui/core/styles';
 class Spinner extends Component {
    render() {
       const {theme} = this.props;
-      if (this.props.isLoading) {
+      if (!this.props.isLoaded) {
          return (
-            <Loader color={theme.palette.secondary.dark} />
+            <Loader color={theme.palette.secondary.main} />
          );
       }
       return <Fragment />;
@@ -18,14 +18,14 @@ class Spinner extends Component {
 }
 
 Spinner.propTypes = {
-   isLoading: PropTypes.bool,
+   isLoaded: PropTypes.bool,
    theme: PropTypes.object
 };
 
 const mapStateToProps = state => {
-   const {loader} = state;
+   const {firebase} = state;
    return {
-      isLoading: loader.isLoading
+      isLoaded: firebase.auth.isLoaded
    };
 };
 

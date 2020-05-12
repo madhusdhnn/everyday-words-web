@@ -1,17 +1,7 @@
-import {CLEAR_IDENTITY, CLEAR_WORDS, SET_IDENTITY, SET_WORDS,} from '../actions/action-types';
+import {CLEAR_WORDS, SET_WORDS,} from '../actions/action-types';
 
-const wordsReducer = (state = {}, action) => {
+const wordsReducer = (state = {words: []}, action) => {
    switch (action.type) {
-   /*case UPDATE_IDENTITY:
-         return {
-            ...state,
-            userId: localStorage.getItem('userId')
-         };*/
-   case SET_IDENTITY:
-      return {
-         ...state,
-         userId: action.data.userId
-      };
    case SET_WORDS:
       return {
          ...state,
@@ -20,10 +10,8 @@ const wordsReducer = (state = {}, action) => {
    case CLEAR_WORDS:
       return {
          ...state,
-         words: null
+         words: []
       };
-   case CLEAR_IDENTITY:
-      return {};
    default:
       return state;
    }
