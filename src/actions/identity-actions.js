@@ -25,7 +25,7 @@ const register = (data) => {
                .set({
                   firstName: data.firstName,
                   lastName: data.lastName,
-                  initials: `${data.firstName[0]}${data.firstName[1]}`
+                  initials: `${data.firstName[0].toUpperCase()}${data.lastName[0].toUpperCase()}`
                });
          })
          .then(() => dispatch(setIdentity({})))
