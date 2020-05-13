@@ -1,46 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 import {Button, Container, CssBaseline, Paper, TextField, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {login} from '../../actions/identity-actions';
+import PropTypes from 'prop-types';
+import AuthForm, {styles} from './AuthForm';
 
-const styles = theme => ({
-   paper: {
-      marginTop: theme.spacing(5),
-      padding: theme.spacing(2, 2),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      [theme.breakpoints.up('sm')]: {
-         padding: theme.spacing(3, 4)
-      }
-   },
-   form: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column'
-   },
-   formField: {
-      margin: theme.spacing(2, 0)
-   },
-   submit: {
-      margin: theme.spacing(3, 0, 2),
-      [theme.breakpoints.down('xs')]: {
-         width: '100%'
-      }
-   }
-});
-
-class LoginForm extends Component {
+class LoginForm extends AuthForm {
    constructor(props) {
       super(props);
       this.state = {
          email: '',
          password: '',
-         errorEmail: false,
          errorPassword: false
       };
       this.onSubmit = this.onSubmit.bind(this);
@@ -50,8 +23,7 @@ class LoginForm extends Component {
 
    changeEmail(e) {
       this.setState({
-         email: e.target.value,
-         errorEmail: false
+         email: e.target.value
       });
    }
 
@@ -64,11 +36,7 @@ class LoginForm extends Component {
 
    onSubmit(e) {
       e.preventDefault();
-      if (!this.state.email) {
-         this.setState({
-            errorEmail: true
-         });
-      } else if (!this.state.password) {
+      if (!this.state.password) {
          this.setState({
             errorPassword: true
          });
@@ -78,7 +46,7 @@ class LoginForm extends Component {
    }
 
    render() {
-      const {classes} = this.props;
+      const {classes, identity} = this.props;
       return (
          <Container component="main" maxWidth="sm">
             <CssBaseline />
@@ -95,11 +63,11 @@ class LoginForm extends Component {
                   <TextField
                      fullWidth
                      required
-                     error={this.state.errorEmail}
+                     error={!!identity.message}
                      value={this.state.email}
                      onChange={this.changeEmail}
                      className={classes.formField}
-                     helperText={this.state.errorEmail ? 'Please enter a valid email' : ''}
+                     helperText={identity.message ? identity.message : ''}
                      type="email"
                      variant="outlined"
                      margin="normal"
@@ -139,6 +107,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
+   identity: PropTypes.object.isRequired,
    isLoaded: PropTypes.bool.isRequired,
    login: PropTypes.func
 };

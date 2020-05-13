@@ -48,8 +48,8 @@ const logout = () => {
       const firebase = getFirebase();
       firebase.auth()
          .signOut()
-         .then(() => dispatch(clearIdentity()));
+         .finally(() => dispatch(clearIdentity()));
    };
 };
 
-export {register, login, logout};
+export {register, login, logout, clearIdentity};

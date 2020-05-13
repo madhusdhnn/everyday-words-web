@@ -1,12 +1,14 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Grid, Typography} from '@material-ui/core';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import {clearIdentity} from '../../actions/identity-actions';
+import {bindActionCreators} from 'redux';
 
-class Auth extends Component {
+class Auth extends PureComponent {
    constructor(props) {
       super(props);
       this.state = {
@@ -16,13 +18,16 @@ class Auth extends Component {
    }
 
    changeIsLogin() {
-      this.setState({
-         isLogin: true
-      });
+      if (this.props.identity.message) {
+         this.props.clearIdentity();
+      }
+      this.setState(prevState => ({
+         isLogin: !prevState.isLogin
+      }));
    }
 
    render() {
-      const {auth} = this.props;
+      const {auth, identity} = this.props;
       const {isLogin} = this.state;
 
       if (!auth.isLoaded) {
@@ -31,8 +36,8 @@ class Auth extends Component {
          return (
             <React.Fragment>
                {isLogin
-                  ? <LoginForm isLoaded={auth.isLoaded} /> // pass err info from firebase, if any
-                  : <RegisterForm isLoaded={auth.isLoaded} /> // pass err info from firebase, if any
+                  ? <LoginForm identity={identity} isLoaded={auth.isLoaded} />
+                  : <RegisterForm identity={identity} isLoaded={auth.isLoaded} />
                }
                {
                   <Grid container justify="center">
@@ -65,12 +70,18 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-   auth: PropTypes.object
+   auth: PropTypes.object,
+   identity: PropTypes.object,
+   clearIdentity: PropTypes.func
 };
 
 const mapStateToProps = state => {
-   const {firebase} = state;
-   return {auth: firebase.auth};
+   const {firebase, identity} = state;
+   return {auth: firebase.auth, identity};
 };
 
-export default connect(mapStateToProps, null)(Auth);
+const mapDispatchToProps = dispatch => {
+   return bindActionCreators({clearIdentity}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

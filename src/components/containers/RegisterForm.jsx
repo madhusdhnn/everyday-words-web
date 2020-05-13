@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Button, Container, CssBaseline, Grid, Paper, TextField, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import compose from 'recompose/compose';
@@ -6,32 +6,9 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {register} from '../../actions/identity-actions';
+import AuthForm, {styles} from './AuthForm';
 
-const styles = theme => ({
-   paper: {
-      marginTop: theme.spacing(5),
-      padding: theme.spacing(2, 2),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      [theme.breakpoints.up('sm')]: {
-         padding: theme.spacing(3, 4)
-      }
-   },
-   form: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column'
-   },
-   formField: {
-      margin: theme.spacing(2, 0)
-   },
-   submit: {
-      margin: theme.spacing(3, 0, 2)
-   }
-});
-
-class RegisterForm extends Component {
+class RegisterForm extends AuthForm {
    constructor(props) {
       super(props);
       this.state = {
@@ -39,7 +16,6 @@ class RegisterForm extends Component {
          password: '',
          firstName: '',
          lastName: '',
-         errorEmail: false,
          errorPassword: false,
          errorFirstName: false,
          errorLastName: false
@@ -53,8 +29,7 @@ class RegisterForm extends Component {
 
    changeEmail(e) {
       this.setState({
-         email: e.target.value,
-         errorEmail: false
+         email: e.target.value
       });
    }
 
@@ -81,13 +56,21 @@ class RegisterForm extends Component {
 
    onSubmit(e) {
       e.preventDefault();
-      if (!this.state.email) {
-         this.setState({
-            errorEmail: true
-         });
-      } else if (!this.state.password) {
+      if (!this.state.password) {
          this.setState({
             errorPassword: true
+         });
+      }
+
+      if (!this.state.firstName) {
+         this.setState({
+            errorFirstName: true
+         });
+      }
+
+      if (!this.state.lastName) {
+         this.setState({
+            errorLastName: true
          });
       } else {
          this.props.register({
@@ -100,7 +83,7 @@ class RegisterForm extends Component {
    }
 
    render() {
-      const {classes} = this.props;
+      const {classes, identity} = this.props;
       return (
          <Container component="main" maxWidth="sm">
             <CssBaseline />
@@ -153,11 +136,11 @@ class RegisterForm extends Component {
                         <TextField
                            fullWidth
                            required
-                           error={this.state.errorEmail}
+                           error={!!identity.message}
                            value={this.state.email}
                            onChange={this.changeEmail}
                            className={classes.formField}
-                           helperText={this.state.errorEmail ? 'Please enter a valid email' : ''}
+                           helperText={identity.message ? identity.message : ''}
                            type="email"
                            variant="outlined"
                            margin="normal"
@@ -202,6 +185,7 @@ class RegisterForm extends Component {
 
 
 RegisterForm.propTypes = {
+   identity: PropTypes.object.isRequired,
    isLoaded: PropTypes.bool.isRequired,
    register: PropTypes.func
 };
