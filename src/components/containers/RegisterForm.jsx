@@ -169,6 +169,7 @@ class RegisterForm extends Component {
                   </Grid>
                   <Button
                      disabled={this.props.isLoading}
+                     disableElevation={this.props.isLoading}
                      type="submit"
                      variant="contained"
                      color="primary"
