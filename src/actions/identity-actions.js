@@ -1,4 +1,5 @@
 import {CLEAR_IDENTITY, SET_IDENTITY} from './action-types';
+import {hideSpinner, showSpinner} from './spinner-actions';
 
 const setIdentity = (data) => {
    return {
@@ -17,9 +18,11 @@ const register = (data) => {
    return (dispatch, getState, {getFirebase, getFirestore}) => {
       const firebase = getFirebase();
       const firestore = getFirestore();
+      dispatch(showSpinner());
       firebase.auth()
          .createUserWithEmailAndPassword(data.email, data.password)
          .then(response => {
+            dispatch(hideSpinner());
             return firestore.collection('users')
                .doc(response.user.uid)
                .set({
@@ -29,25 +32,35 @@ const register = (data) => {
                });
          })
          .then(() => dispatch(setIdentity({})))
-         .catch(err => dispatch(setIdentity(err)));
+         .catch(err => {
+            dispatch(hideSpinner());
+            dispatch(setIdentity(err));
+         });
    };
 };
 
 const login = (credentials) => {
    return (dispatch, getState, {getFirebase}) => {
       const firebase = getFirebase();
+      dispatch(showSpinner());
       firebase.auth()
          .signInWithEmailAndPassword(credentials.email, credentials.password)
+         .then(() => dispatch(hideSpinner()))
          .then(() => dispatch(setIdentity({})))
-         .catch(err => dispatch(setIdentity(err)));
+         .catch(err => {
+            dispatch(hideSpinner());
+            dispatch(setIdentity(err));
+         });
    };
 };
 
 const logout = () => {
    return (dispatch, getState, {getFirebase}) => {
       const firebase = getFirebase();
+      dispatch(showSpinner());
       firebase.auth()
          .signOut()
+         .then(() => dispatch(hideSpinner()))
          .finally(() => dispatch(clearIdentity()));
    };
 };

@@ -12,32 +12,32 @@ class Auth extends PureComponent {
    constructor(props) {
       super(props);
       this.state = {
-         isLogin: false
+         isRegister: false
       };
-      this.changeIsLogin = this.changeIsLogin.bind(this);
+      this.changeIsRegister = this.changeIsRegister.bind(this);
    }
 
-   changeIsLogin() {
+   changeIsRegister() {
       if (this.props.identity.message) {
          this.props.clearIdentity();
       }
       this.setState(prevState => ({
-         isLogin: !prevState.isLogin
+         isRegister: !prevState.isRegister
       }));
    }
 
    render() {
       const {auth, identity} = this.props;
-      const {isLogin} = this.state;
+      const {isRegister} = this.state;
 
       if (!auth.isLoaded) {
          return (<React.Fragment />);
       } else if (!auth.uid) {
          return (
             <React.Fragment>
-               {isLogin
-                  ? <LoginForm identity={identity} isLoaded={auth.isLoaded} />
-                  : <RegisterForm identity={identity} isLoaded={auth.isLoaded} />
+               {isRegister
+                  ? <RegisterForm identity={identity} isLoading={this.props.open} />
+                  : <LoginForm identity={identity} isLoading={this.props.open} />
                }
                {
                   <Grid container justify="center">
@@ -46,13 +46,9 @@ class Auth extends PureComponent {
                            style={{textDecoration: 'underline', cursor: 'pointer', padding: 10}}
                            variant="body2"
                            color="primary"
-                           onClick={this.changeIsLogin}
+                           onClick={this.changeIsRegister}
                         >
-                           {
-                              isLogin
-                                 ? "Don't have an account? Sign Up"
-                                 : 'Already have an account? Sign in'
-                           }
+                           {`${isRegister ? 'Already have an account? Sign in' : 'Don\'t have an account? Sign Up'}`}
                         </Typography>
                      </Grid>
                   </Grid>
@@ -70,14 +66,19 @@ class Auth extends PureComponent {
 }
 
 Auth.propTypes = {
+   open: PropTypes.bool,
    auth: PropTypes.object,
    identity: PropTypes.object,
    clearIdentity: PropTypes.func
 };
 
 const mapStateToProps = state => {
-   const {firebase, identity} = state;
-   return {auth: firebase.auth, identity};
+   const {firebase, identity, spinner} = state;
+   return {
+      auth: firebase.auth,
+      open: spinner.open,
+      identity
+   };
 };
 
 const mapDispatchToProps = dispatch => {

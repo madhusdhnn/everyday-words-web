@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const styles = theme => ({
+export default theme => ({
    paper: {
       marginTop: theme.spacing(5),
       padding: theme.spacing(2, 2),
@@ -28,20 +26,3 @@ export const styles = theme => ({
       }
    }
 });
-
-class AuthForm extends React.Component {
-   constructor(props) {
-      super(props);
-      this.changeEmail = this.changeEmail.bind(this);
-      this.changePassword = this.changePassword.bind(this);
-   }
-
-   changeEmail() {
-   }
-
-   changePassword() {
-   }
-
-}
-
-export default AuthForm;

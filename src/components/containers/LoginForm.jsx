@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 import {Button, Container, CssBaseline, Paper, TextField, Typography} from '@material-ui/core';
@@ -6,9 +6,9 @@ import {withStyles} from '@material-ui/core/styles';
 import {bindActionCreators} from 'redux';
 import {login} from '../../actions/identity-actions';
 import PropTypes from 'prop-types';
-import AuthForm, {styles} from './AuthForm';
+import styles from './AuthFormStyles';
 
-class LoginForm extends AuthForm {
+class LoginForm extends Component {
    constructor(props) {
       super(props);
       this.state = {
@@ -91,7 +91,7 @@ class LoginForm extends AuthForm {
                      name="password"
                   />
                   <Button
-                     disabled={!this.props.isLoaded} // fix this
+                     disabled={this.props.isLoading} // fix this
                      type="submit"
                      variant="contained"
                      color="primary"
@@ -108,7 +108,7 @@ class LoginForm extends AuthForm {
 
 LoginForm.propTypes = {
    identity: PropTypes.object.isRequired,
-   isLoaded: PropTypes.bool.isRequired,
+   isLoading: PropTypes.bool.isRequired,
    login: PropTypes.func
 };
 

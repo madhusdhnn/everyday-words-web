@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Button, Container, CssBaseline, Grid, Paper, TextField, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import compose from 'recompose/compose';
@@ -6,9 +6,9 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {register} from '../../actions/identity-actions';
-import AuthForm, {styles} from './AuthForm';
+import styles from './AuthFormStyles';
 
-class RegisterForm extends AuthForm {
+class RegisterForm extends Component {
    constructor(props) {
       super(props);
       this.state = {
@@ -168,7 +168,7 @@ class RegisterForm extends AuthForm {
                      </Grid>
                   </Grid>
                   <Button
-                     disabled={!this.props.isLoaded} // fix this
+                     disabled={this.props.isLoading}
                      type="submit"
                      variant="contained"
                      color="primary"
@@ -186,7 +186,7 @@ class RegisterForm extends AuthForm {
 
 RegisterForm.propTypes = {
    identity: PropTypes.object.isRequired,
-   isLoaded: PropTypes.bool.isRequired,
+   isLoading: PropTypes.bool.isRequired,
    register: PropTypes.func
 };
 
@@ -198,9 +198,6 @@ export default compose(
    withStyles(styles, {
       name: 'RegisterForm'
    }),
-   connect(
-      null,
-      mapDispatchToProps
-   )
+   connect(null, mapDispatchToProps)
 )(RegisterForm);
 
