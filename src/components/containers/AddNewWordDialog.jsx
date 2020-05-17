@@ -19,6 +19,11 @@ const styles = theme => ({
 });
 
 class AddNewWordDialog extends Component {
+
+   static isEmpty(...strings) {
+      return strings.length !== 0 && strings.filter(s => s === '').length !== 0;
+   }
+
    constructor(props) {
       super(props);
       this.state = {
@@ -75,6 +80,7 @@ class AddNewWordDialog extends Component {
                   variant="contained"
                   onClick={this.addWord}
                   color="primary"
+                  disabled={AddNewWordDialog.isEmpty(this.state.word, this.state.meaning, this.state.source)}
                   className={classes.submit}
                >
                   add
