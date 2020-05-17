@@ -61,6 +61,7 @@ const logout = () => {
       firebase.auth()
          .signOut()
          .then(() => dispatch(hideSpinner()))
+         .catch(() => dispatch(hideSpinner()))
          .finally(() => dispatch(clearIdentity()));
    };
 };

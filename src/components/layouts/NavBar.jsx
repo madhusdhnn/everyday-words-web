@@ -59,6 +59,7 @@ NavBar.propTypes = {
 const mapDispatchToProps = dispatch => {
    return bindActionCreators({logout}, dispatch);
 };
+
 export default compose(
    withStyles(styles, {
       name: 'NavBar'

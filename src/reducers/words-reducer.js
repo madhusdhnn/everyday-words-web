@@ -1,16 +1,11 @@
-import {CLEAR_WORDS, SET_WORDS,} from '../actions/action-types';
+import {SET_WORD_ERROR,} from '../actions/action-types';
 
-const wordsReducer = (state = {words: []}, action) => {
+const wordsReducer = (state = {}, action) => {
    switch (action.type) {
-   case SET_WORDS:
+   case SET_WORD_ERROR:
       return {
          ...state,
-         words: action.data
-      };
-   case CLEAR_WORDS:
-      return {
-         ...state,
-         words: []
+         err: action.err
       };
    default:
       return state;

@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {login} from '../../actions/identity-actions';
 import PropTypes from 'prop-types';
 import styles from './AuthFormStyles';
+import Copyright from '../layouts/Copyright';
 
 class LoginForm extends Component {
    constructor(props) {
@@ -102,6 +103,7 @@ class LoginForm extends Component {
                   </Button>
                </form>
             </Paper>
+            <Copyright />
          </Container>
       );
    }

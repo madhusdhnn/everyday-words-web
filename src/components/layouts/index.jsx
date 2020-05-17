@@ -6,9 +6,8 @@ import Spinner from './Spinner';
 import SnackBar from './SnackBar';
 import NavBar from './NavBar';
 import Auth from '../containers/Auth';
-import Copyright from './Copyright';
 
-const style = {width: '100%'};
+const style = {width: '100%', marginBottom: 10};
 
 class Layout extends Component {
    render() {
@@ -22,7 +21,6 @@ class Layout extends Component {
                   {this.props.children}
                </div>
             </Auth>
-            <Copyright />
          </ThemeProvider>
       );
    }

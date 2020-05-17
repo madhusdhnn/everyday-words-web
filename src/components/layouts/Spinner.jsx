@@ -8,7 +8,7 @@ import {withTheme} from '@material-ui/core/styles';
 class Spinner extends Component {
    render() {
       const {theme} = this.props;
-      if (this.props.open) {
+      if (this.props.open || !this.props.isLoaded) {
          return (
             <Loader color={theme.palette.secondary.main} />
          );
@@ -19,13 +19,15 @@ class Spinner extends Component {
 
 Spinner.propTypes = {
    open: PropTypes.bool,
+   isLoaded: PropTypes.bool,
    theme: PropTypes.object
 };
 
 const mapStateToProps = state => {
-   const {spinner} = state;
+   const {spinner, firebase} = state;
    return {
-      open: spinner.open
+      open: spinner.open,
+      isLoaded: firebase.auth.isLoaded
    };
 };
 

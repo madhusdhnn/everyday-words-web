@@ -1,8 +1,7 @@
 export const SET_IDENTITY = 'SET_IDENTITY';
 export const CLEAR_IDENTITY = 'CLEAR_IDENTITY';
 export const SET_WORDS = 'SET_WORDS';
-export const ADD_WORD = 'ADD_WORD';
-export const CLEAR_WORD = 'CLEAR_WORD';
+export const SET_WORD_ERROR = 'SET_WORD_ERROR';
 export const CLEAR_WORDS = 'CLEAR_WORDS';
 export const SNACKBAR_ERROR = 'SNACKBAR_ERROR';
 export const SNACKBAR_WARNING = 'SNACKBAR_WARNING';

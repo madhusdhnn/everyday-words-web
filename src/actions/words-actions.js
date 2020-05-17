@@ -1,24 +1,33 @@
-import {CLEAR_WORDS, SET_WORDS} from './action-types';
+import {SET_WORD_ERROR} from './action-types';
+import {hideSpinner, showSpinner} from './spinner-actions';
 
-const setWords = data => {
+const clearWord = (err) => {
    return {
-      type: SET_WORDS,
-      data: data
-   };
-};
-
-const clearWords = () => {
-   return {
-      type: CLEAR_WORDS
+      type: SET_WORD_ERROR,
+      err: err
    };
 };
 
 const addWord = (data) => {
-   return (dispatch, {getFirebase, getFirestore}) => {
+   return (dispatch, getState, {getFirestore}) => {
+      const firestore = getFirestore();
+      const {uid} = getState().firebase.auth;
+      dispatch(showSpinner());
+      firestore.collection('words')
+         .add({
+            ...data,
+            userId: uid,
+            createdAt: new Date()
+         })
+         .then(() => dispatch(hideSpinner()))
+         .catch(err => {
+            dispatch(hideSpinner());
+            dispatch(clearWord(err));
+         });
+
    };
 };
 
 export {
-   addWord,
-   clearWords
+   addWord
 };

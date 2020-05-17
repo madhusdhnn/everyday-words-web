@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {register} from '../../actions/identity-actions';
 import styles from './AuthFormStyles';
+import Copyright from '../layouts/Copyright';
 
 class RegisterForm extends Component {
    constructor(props) {
@@ -179,6 +180,7 @@ class RegisterForm extends Component {
                   </Button>
                </form>
             </Paper>
+            <Copyright />
          </Container>
       );
    }
