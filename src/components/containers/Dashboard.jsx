@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Box, Button, Container, CssBaseline, Typography} from '@material-ui/core';
 import {connect} from 'react-redux';
-import {addWord} from '../../actions/words-actions';
+import {addWord, deleteWord} from '../../actions/words-actions';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import {firestoreConnect} from 'react-redux-firebase';
@@ -58,8 +58,8 @@ class Dashboard extends Component {
 
    addWord = (data) => {
       const that = this;
-      Promise.all([that.props.addWord(data)])
-         .finally(() => that.closeDialog());
+      that.closeDialog();
+      that.props.addWord(data);
    }
 
    render() {
@@ -68,11 +68,13 @@ class Dashboard extends Component {
          return (<React.Fragment />);
       } else if (words.length === 0) {
       }
+      const wordsOfCurrentUser = words.filter(word => word.userId === auth.uid);
+
       return (
          <Container component="div" maxWidth="lg" className={classes.root}>
             <CssBaseline />
             {
-               words.length === 0
+               wordsOfCurrentUser.length === 0
                   ? (
                      <Container component="div" maxWidth="xs" className={classes.imageContainer}>
                         <img src={noData} alt="No Data Pad" className={classes.image} />
@@ -83,7 +85,11 @@ class Dashboard extends Component {
                   )
                   : (<React.Fragment />)
             }
-            <Box component="div" m={`${words.length === 0 ? 1 : 0}`} className={`${words.length === 0 ? classes.boxContainer : ''}`}>
+            <Box
+               component="div"
+               m={`${wordsOfCurrentUser.length === 0 ? 1 : 0}`}
+               className={`${wordsOfCurrentUser.length === 0 ? classes.boxContainer : ''}`}
+            >
                <Button
                   id="open-dialog-button"
                   color="primary"
@@ -94,9 +100,8 @@ class Dashboard extends Component {
                   add word
                </Button>
             </Box>
-            <WordList words={words.filter(word => word.userId === auth.uid)} />
+            <WordList words={wordsOfCurrentUser} deleteWord={this.props.deleteWord} />
             <AddNewWordDialog
-               disabled={this.props.isLoading}
                open={this.state.openNewWordDialog}
                addWord={this.addWord}
                closeDialog={this.closeDialog}
@@ -108,22 +113,23 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
    words: PropTypes.array,
-   isLoading: PropTypes.bool,
    addWord: PropTypes.func,
-   auth: PropTypes.object
+   auth: PropTypes.object,
+   err: PropTypes.object,
+   deleteWord: PropTypes.func
 };
 
 const mapStateToProps = state => {
-   const {firestore, firebase, spinner} = state;
+   const {firestore, firebase, words} = state;
    return {
       words: firestore.ordered.words,
       auth: firebase.auth,
-      isLoading: spinner.open
+      err: words.err
    };
 };
 
 const mapDispatchToProps = dispatch => {
-   return bindActionCreators({addWord}, dispatch);
+   return bindActionCreators({addWord, deleteWord}, dispatch);
 };
 
 const mapCollectionToProps = () => [{collection: 'words'}];

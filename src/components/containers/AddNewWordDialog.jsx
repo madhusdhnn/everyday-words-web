@@ -8,10 +8,6 @@ const styles = theme => ({
    dialogAction: {
       padding: theme.spacing(1, 3)
    },
-   disabled: {
-      color: 'rgba(0, 0, 0, 0.26)',
-      backgroundColor: 'rgba(0, 0, 0, 0.12)'
-   },
    submit: {
       margin: theme.spacing(3, 0),
       width: theme.spacing(11)
@@ -55,7 +51,6 @@ class AddNewWordDialog extends Component {
             maxWidth="xs"
             open={open}
             onClose={closeDialog}
-            className={`${this.props.disabled ? classes.disabled : ''}`}
             aria-labelledby="add-new-word-title"
          >
             <DialogTitle id="add-new-word-title">Fill in the form..</DialogTitle>
@@ -93,7 +88,6 @@ class AddNewWordDialog extends Component {
 
 AddNewWordDialog.propTypes = {
    open: PropTypes.bool.isRequired,
-   disabled: PropTypes.bool.isRequired,
    closeDialog: PropTypes.func.isRequired,
    addWord: PropTypes.func.isRequired
 };
