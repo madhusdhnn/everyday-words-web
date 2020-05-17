@@ -62,6 +62,7 @@ class AddWordFormFields extends Component {
                   label="Source"
                   autoComplete="off"
                   color="primary"
+                  helperText="* This can be any link or a normal text"
                   value={this.props.source}
                   className={classes.textField}
                   onChange={this.changeFormField}

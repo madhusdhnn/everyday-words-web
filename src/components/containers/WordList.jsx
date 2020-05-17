@@ -58,6 +58,12 @@ const styles = theme => ({
 });
 
 class WordList extends Component {
+
+   static urlLike(str) {
+      const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
+      return str.match(pattern);
+   }
+
    constructor(props) {
       super(props);
       this.state = {
@@ -163,15 +169,29 @@ class WordList extends Component {
                               </Typography>
                            </Grid>
                            <Grid item xs={8} sm={10} lg={10}>
-                              <Link
-                                 className={classes.text}
-                                 href={word.source}
-                                 color="secondary"
-                                 target="_blank"
-                                 rel="noopener noreferrer"
-                              >
-                                 open link
-                              </Link>
+                              {
+                                 WordList.urlLike(word.source)
+                                    ? (
+                                       <Link
+                                          className={classes.text}
+                                          href={word.source}
+                                          color="secondary"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                       >
+                                          open link
+                                       </Link>
+                                    )
+                                    : (
+                                       <Typography
+                                          variant="body2"
+                                          className={classes.text}
+                                          color="inherit"
+                                       >
+                                          {word.source}
+                                       </Typography>
+                                    )
+                              }
                            </Grid>
                         </Grid>
                      </Paper>
