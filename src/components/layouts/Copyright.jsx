@@ -2,14 +2,11 @@ import React from 'react';
 import {Grid, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
    copyright: {
-      position: 'fixed',
-      bottom: 20,
-      left: 0,
-      right: 0
+      marginTop: theme.spacing(20)
    }
-}, {
+}), {
    name: 'Copyright'
 });
 

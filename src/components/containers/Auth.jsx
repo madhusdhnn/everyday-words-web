@@ -7,6 +7,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import {clearIdentity} from '../../actions/identity-actions';
 import {bindActionCreators} from 'redux';
+import Copyright from "../layouts/Copyright";
 
 class Auth extends PureComponent {
    constructor(props) {
@@ -53,6 +54,7 @@ class Auth extends PureComponent {
                      </Grid>
                   </Grid>
                }
+               <Copyright />
             </React.Fragment>
          );
       }

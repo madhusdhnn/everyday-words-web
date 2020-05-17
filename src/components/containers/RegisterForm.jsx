@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {register} from '../../actions/identity-actions';
 import styles from './AuthFormStyles';
-import Copyright from '../layouts/Copyright';
 
 class RegisterForm extends Component {
    constructor(props) {
@@ -89,8 +88,11 @@ class RegisterForm extends Component {
          <Container component="main" maxWidth="sm">
             <CssBaseline />
             <Paper elevation={2} className={classes.paper}>
-               <Typography component="h1" variant="h5">
+               <Typography paragraph component="h1" variant="h5">
                   Everyday Words
+               </Typography>
+               <Typography paragraph variant="body2" color="textSecondary" align="justify">
+                  Your personal words app. Add new words you learn everyday in your list.
                </Typography>
                <form
                   noValidate
@@ -180,7 +182,6 @@ class RegisterForm extends Component {
                   </Button>
                </form>
             </Paper>
-            <Copyright />
          </Container>
       );
    }
