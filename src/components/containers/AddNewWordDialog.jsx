@@ -46,7 +46,7 @@ class AddNewWordDialog extends Component {
 
    closeDialog() {
       this.clearForm();
-      this.props.closeDialog();
+      this.props.close();
    }
 
    clearForm() {
@@ -104,7 +104,7 @@ class AddNewWordDialog extends Component {
 
 AddNewWordDialog.propTypes = {
    open: PropTypes.bool.isRequired,
-   closeDialog: PropTypes.func.isRequired,
+   close: PropTypes.func.isRequired,
    addWord: PropTypes.func.isRequired
 };
 

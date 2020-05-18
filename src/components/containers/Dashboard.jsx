@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {Box, Button, Container, CssBaseline, Typography} from '@material-ui/core';
+import {Container, CssBaseline, Typography} from '@material-ui/core';
 import {connect} from 'react-redux';
 import {addWord, deleteWord} from '../../actions/words-actions';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import {firestoreConnect} from 'react-redux-firebase';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddNewWordDialog from './AddNewWordDialog';
 import {bindActionCreators} from 'redux';
 import WordList from './WordList';
 import noData from '../../static/images/no-data.png';
@@ -26,11 +25,6 @@ const styles = theme => ({
    image: {
       height: theme.spacing(20),
       width: 'auto',
-   },
-   boxContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
    }
 });
 
@@ -47,19 +41,6 @@ class Dashboard extends Component {
       this.setState({
          openNewWordDialog: true
       });
-   }
-
-   closeDialog = () => {
-      const that = this;
-      that.setState({
-         openNewWordDialog: false
-      });
-   }
-
-   addWord = (data) => {
-      const that = this;
-      that.closeDialog();
-      that.props.addWord(data);
    }
 
    render() {
@@ -85,27 +66,7 @@ class Dashboard extends Component {
                   )
                   : (<React.Fragment />)
             }
-            <Box
-               component="div"
-               m={`${wordsOfCurrentUser.length === 0 ? 1 : 0}`}
-               className={`${wordsOfCurrentUser.length === 0 ? classes.boxContainer : ''}`}
-            >
-               <Button
-                  id="open-dialog-button"
-                  color="primary"
-                  variant="outlined"
-                  style={{margin: '8px'}}
-                  onClick={this.openDialog}
-               >
-                  add word
-               </Button>
-            </Box>
             <WordList words={wordsOfCurrentUser} deleteWord={this.props.deleteWord} />
-            <AddNewWordDialog
-               open={this.state.openNewWordDialog}
-               addWord={this.addWord}
-               closeDialog={this.closeDialog}
-            />
          </Container>
       );
    }

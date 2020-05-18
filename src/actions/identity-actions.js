@@ -54,7 +54,7 @@ const login = (credentials) => {
    };
 };
 
-const logout = () => {
+const signOut = () => {
    return (dispatch, getState, {getFirebase}) => {
       const firebase = getFirebase();
       dispatch(showSpinner());
@@ -66,4 +66,4 @@ const logout = () => {
    };
 };
 
-export {register, login, logout, clearIdentity};
+export {register, login, signOut, clearIdentity};

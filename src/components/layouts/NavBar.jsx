@@ -3,14 +3,18 @@ import {withStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import {ExitToApp} from '@material-ui/icons';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {Add, ExitToApp} from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
+import {addWord} from '../../actions/words-actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {logout} from '../../actions/identity-actions';
+import {signOut} from '../../actions/identity-actions';
 import compose from 'recompose/compose';
+import ElevationScroll from './ElevationScroll';
+import AddNewWordDialog from '../containers/AddNewWordDialog';
 
 const styles = {
    root: {
@@ -24,40 +28,78 @@ const styles = {
 class NavBar extends Component {
    constructor(props) {
       super(props);
-      this.handleClick = this.handleClick.bind(this);
+      this.state = {
+         openNewWordDialog: false
+      };
+      this.openDialog = this.openDialog.bind(this);
+      this.signOut = this.signOut.bind(this);
    }
 
-   handleClick() {
-      this.props.logout();
+   openDialog() {
+      this.setState({
+         openNewWordDialog: true
+      });
+   }
+
+   closeDialog = () => {
+      const that = this;
+      that.setState({
+         openNewWordDialog: false
+      });
+   }
+
+   addWord = (data) => {
+      const that = this;
+      that.closeDialog();
+      that.props.addWord(data);
+   }
+
+   signOut() {
+      this.props.signOut();
    }
 
    render() {
       const {classes} = this.props;
       return (
          <div className={classes.root}>
-            <AppBar position="static">
-               <Toolbar>
-                  <Typography variant="h6" className={classes.title}>
-                     Everyday Words
-                  </Typography>
-                  <Tooltip title="Log Out" aria-label="Log Out">
-                     <IconButton aria-label="log out" color="inherit" onClick={this.handleClick}>
-                        <ExitToApp />
-                     </IconButton>
-                  </Tooltip>
-               </Toolbar>
-            </AppBar>
+            <CssBaseline />
+            <ElevationScroll {...this.props}>
+               <AppBar>
+                  <Toolbar>
+                     <Typography variant="h6" className={classes.title}>
+                        Everyday Words
+                     </Typography>
+                     <Tooltip title="Add Word" aria-label="Add Word">
+                        <IconButton aria-label="add word" color="inherit" onClick={this.openDialog}>
+                           <Add />
+                        </IconButton>
+                     </Tooltip>
+                     <Tooltip title="Log Out" aria-label="Log Out">
+                        <IconButton aria-label="log out" color="inherit" onClick={this.signOut}>
+                           <ExitToApp />
+                        </IconButton>
+                     </Tooltip>
+                  </Toolbar>
+               </AppBar>
+            </ElevationScroll>
+            <Toolbar />
+            <AddNewWordDialog
+               open={this.state.openNewWordDialog}
+               close={this.closeDialog}
+               addWord={this.addWord}
+            />
          </div>
       );
    }
 }
 
 NavBar.propTypes = {
-   logout: PropTypes.func
+   signOut: PropTypes.func,
+   addWord: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
-   return bindActionCreators({logout}, dispatch);
+   return bindActionCreators({addWord, signOut}, dispatch);
 };
 
 export default compose(
