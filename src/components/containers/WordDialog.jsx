@@ -14,7 +14,7 @@ const styles = theme => ({
    }
 });
 
-class AddNewWordDialog extends Component {
+class WordDialog extends Component {
 
    static isEmpty(...strings) {
       return strings.length !== 0 && strings.filter(s => s === '').length !== 0;
@@ -23,17 +23,23 @@ class AddNewWordDialog extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         word: '',
-         meaning: '',
-         source: ''
+         word: props.word ? props.word : '',
+         meaning: props.meaning ? props.meaning : '',
+         source: props.source ? props.source : ''
       };
       this.addWord = this.addWord.bind(this);
+      this.updateWord = this.updateWord.bind(this);
       this.closeDialog = this.closeDialog.bind(this);
       this.clearForm = this.clearForm.bind(this);
    }
 
    addWord() {
       this.props.addWord({...this.state});
+      this.clearForm();
+   }
+
+   updateWord() {
+      this.props.updateWord({...this.state});
       this.clearForm();
    }
 
@@ -69,7 +75,9 @@ class AddNewWordDialog extends Component {
             onClose={this.closeDialog}
             aria-labelledby="add-new-word-title"
          >
-            <DialogTitle id="add-new-word-title">Fill in the form..</DialogTitle>
+            <DialogTitle id="add-new-word-title">
+               {this.props.isEdit ? 'Edit' : 'Fill in the form..'}
+            </DialogTitle>
             <DialogContent>
                <AddWordFormFields
                   word={this.state.word}
@@ -87,25 +95,45 @@ class AddNewWordDialog extends Component {
                >
                   cancel
                </Button>
-               <Button
-                  variant="contained"
-                  onClick={this.addWord}
-                  color="primary"
-                  disabled={AddNewWordDialog.isEmpty(this.state.word, this.state.meaning, this.state.source)}
-                  className={classes.submit}
-               >
-                  add
-               </Button>
+               {
+                  this.props.isEdit
+                     ? (
+                        <Button
+                           variant="contained"
+                           onClick={this.updateWord}
+                           color="primary"
+                           className={classes.submit}
+                        >
+                           save
+                        </Button>
+                     )
+                     : (
+                        <Button
+                           variant="contained"
+                           onClick={this.addWord}
+                           color="primary"
+                           disabled={WordDialog.isEmpty(this.state.word, this.state.meaning, this.state.source)}
+                           className={classes.submit}
+                        >
+                           add
+                        </Button>
+                     )
+               }
             </DialogActions>
          </Dialog>
       );
    }
 }
 
-AddNewWordDialog.propTypes = {
+WordDialog.propTypes = {
    open: PropTypes.bool.isRequired,
    close: PropTypes.func.isRequired,
-   addWord: PropTypes.func.isRequired
+   isEdit: PropTypes.bool,
+   word: PropTypes.string,
+   meaning: PropTypes.string,
+   source: PropTypes.string,
+   addWord: PropTypes.func,
+   updateWord: PropTypes.func
 };
 
-export default withStyles(styles)(AddNewWordDialog);
+export default withStyles(styles)(WordDialog);

@@ -14,7 +14,7 @@ import {bindActionCreators} from 'redux';
 import {signOut} from '../../actions/identity-actions';
 import compose from 'recompose/compose';
 import ElevationScroll from './ElevationScroll';
-import AddNewWordDialog from '../containers/AddNewWordDialog';
+import AddNewWordDialog from '../containers/WordDialog';
 
 const styles = {
    root: {
@@ -83,11 +83,15 @@ class NavBar extends Component {
                </AppBar>
             </ElevationScroll>
             <Toolbar />
-            <AddNewWordDialog
-               open={this.state.openNewWordDialog}
-               close={this.closeDialog}
-               addWord={this.addWord}
-            />
+            {
+               this.state.openNewWordDialog && (
+                  <AddNewWordDialog
+                     open={this.state.openNewWordDialog}
+                     close={this.closeDialog}
+                     addWord={this.addWord}
+                  />
+               )
+            }
          </div>
       );
    }

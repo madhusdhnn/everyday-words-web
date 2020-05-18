@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Container, CssBaseline, Typography} from '@material-ui/core';
 import {connect} from 'react-redux';
-import {addWord, deleteWord} from '../../actions/words-actions';
+import {addWord, deleteWord, updateWord} from '../../actions/words-actions';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import {firestoreConnect} from 'react-redux-firebase';
@@ -12,6 +12,11 @@ import noData from '../../static/images/no-data.png';
 
 const styles = theme => ({
    root: {
+      [theme.breakpoints.up('md')]: {
+         display: 'flex',
+         justifyContent: 'flex-start',
+         flexWrap: 'wrap'
+      },
       marginTop: theme.spacing(2)
    },
    imageContainer: {
@@ -29,20 +34,6 @@ const styles = theme => ({
 });
 
 class Dashboard extends Component {
-   constructor(props) {
-      super(props);
-      this.state = {
-         openNewWordDialog: false
-      };
-      this.openDialog = this.openDialog.bind(this);
-   }
-
-   openDialog() {
-      this.setState({
-         openNewWordDialog: true
-      });
-   }
-
    render() {
       const {classes, words, auth} = this.props;
       if (!words) {
@@ -66,7 +57,11 @@ class Dashboard extends Component {
                   )
                   : (<React.Fragment />)
             }
-            <WordList words={wordsOfCurrentUser} deleteWord={this.props.deleteWord} />
+            <WordList
+               words={wordsOfCurrentUser}
+               updateWord={this.props.updateWord}
+               deleteWord={this.props.deleteWord}
+            />
          </Container>
       );
    }
@@ -77,7 +72,8 @@ Dashboard.propTypes = {
    addWord: PropTypes.func,
    auth: PropTypes.object,
    err: PropTypes.object,
-   deleteWord: PropTypes.func
+   deleteWord: PropTypes.func,
+   updateWord: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -90,7 +86,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-   return bindActionCreators({addWord, deleteWord}, dispatch);
+   return bindActionCreators({addWord, updateWord, deleteWord}, dispatch);
 };
 
 const mapCollectionToProps = () => [{collection: 'words'}];

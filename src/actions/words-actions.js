@@ -24,7 +24,24 @@ const addWord = (data) => {
             dispatch(hideSpinner());
             dispatch(setWordError(err));
          });
+   };
+};
 
+const updateWord = (wordId, data) => {
+   return (dispatch, getState, {getFirestore}) => {
+      const firestore = getFirestore();
+      const {uid} = getState().firebase.auth;
+      dispatch(showSpinner());
+      firestore.collection('words').doc(wordId)
+         .update({
+            ...data,
+            userId: uid
+         })
+         .then(() => dispatch(hideSpinner()))
+         .catch(err => {
+            dispatch(hideSpinner());
+            dispatch(setWordError(err));
+         });
    };
 };
 
@@ -45,5 +62,6 @@ const deleteWord = (wordId) => {
 
 export {
    addWord,
+   updateWord,
    deleteWord
 };

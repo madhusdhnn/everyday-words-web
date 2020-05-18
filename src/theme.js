@@ -15,7 +15,7 @@ let theme = createMuiTheme({
          contrastText: 'rgb(0, 0, 0)'
       },
       background: {
-         default: '#fff'
+         default: '#f8f9fa'
       }
    }
 });
