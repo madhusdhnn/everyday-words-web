@@ -188,7 +188,6 @@ class WordList extends Component {
                               <Typography
                                  variant="body2"
                                  className={classes.text}
-                                 color="textSecondary"
                               >
                                  {moment(word.createdAt.toDate()).calendar()}
                               </Typography>
