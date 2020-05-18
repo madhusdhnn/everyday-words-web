@@ -19,6 +19,7 @@ class LoginForm extends Component {
       this.onSubmit = this.onSubmit.bind(this);
       this.changeEmail = this.changeEmail.bind(this);
       this.changePassword = this.changePassword.bind(this);
+      this.clearForm = this.clearForm.bind(this);
    }
 
    changeEmail(e) {
@@ -42,7 +43,16 @@ class LoginForm extends Component {
          });
       } else {
          this.props.login({email: this.state.email, password: this.state.password});
+         this.clearForm();
       }
+   }
+
+   clearForm() {
+      this.setState({
+         email: '',
+         password: '',
+         errorPassword: false
+      });
    }
 
    render() {

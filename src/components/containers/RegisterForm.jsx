@@ -25,6 +25,7 @@ class RegisterForm extends Component {
       this.changePassword = this.changePassword.bind(this);
       this.changeFirstName = this.changeFirstName.bind(this);
       this.changeLastName = this.changeLastName.bind(this);
+      this.clearForm = this.clearForm.bind(this);
    }
 
    changeEmail(e) {
@@ -79,7 +80,20 @@ class RegisterForm extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName
          });
+         this.clearForm();
       }
+   }
+
+   clearForm() {
+      this.setState({
+         email: '',
+         password: '',
+         firstName: '',
+         lastName: '',
+         errorPassword: false,
+         errorFirstName: false,
+         errorLastName: false
+      });
    }
 
    render() {

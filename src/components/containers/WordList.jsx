@@ -7,6 +7,7 @@ import {
    Dialog,
    DialogActions,
    DialogContent,
+   DialogContentText,
    DialogTitle,
    Divider,
    Grid,
@@ -44,16 +45,15 @@ const styles = theme => ({
       padding: theme.spacing(1, 3)
    },
    word: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(1, 0),
       textTransform: 'capitalize',
    },
    delete: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(1, 0),
       color: theme.palette.error.main
    },
    text: {
-      fontSize: theme.spacing(2),
-      marginBottom: theme.spacing(1)
+      fontSize: theme.spacing(2)
    }
 });
 
@@ -75,8 +75,8 @@ class WordList extends Component {
    }
 
    deleteWord() {
-      this.closeDialog();
       this.props.deleteWord(this.state.wordId);
+      this.closeDialog();
    }
 
    openDialog(wordId) {
@@ -145,26 +145,6 @@ class WordList extends Component {
                                  className={classes.text}
                                  color="textSecondary"
                               >
-                                 Time:
-                              </Typography>
-                           </Grid>
-                           <Grid item xs={8} sm={10} lg={10}>
-                              <Typography
-                                 variant="body2"
-                                 className={classes.text}
-                                 color="textSecondary"
-                              >
-                                 {moment(word.createdAt.toDate()).calendar()}
-                              </Typography>
-                           </Grid>
-                        </Grid>
-                        <Grid container spacing={3}>
-                           <Grid item xs={4} sm={2} lg={2}>
-                              <Typography
-                                 variant="body2"
-                                 className={classes.text}
-                                 color="textSecondary"
-                              >
                                  Source:
                               </Typography>
                            </Grid>
@@ -194,6 +174,26 @@ class WordList extends Component {
                               }
                            </Grid>
                         </Grid>
+                        <Grid container spacing={3}>
+                           <Grid item xs={4} sm={2} lg={2}>
+                              <Typography
+                                 variant="body2"
+                                 className={classes.text}
+                                 color="textSecondary"
+                              >
+                                 Time:
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={8} sm={10} lg={10}>
+                              <Typography
+                                 variant="body2"
+                                 className={classes.text}
+                                 color="textSecondary"
+                              >
+                                 {moment(word.createdAt.toDate()).calendar()}
+                              </Typography>
+                           </Grid>
+                        </Grid>
                      </Paper>
                   )
                )
@@ -209,9 +209,9 @@ class WordList extends Component {
             >
                <DialogTitle id="delete-word-title">Delete Word</DialogTitle>
                <DialogContent>
-                  <Typography style={{fontSize: 16}} variant="body1" color="textSecondary">
-                     {'Are you sure want to delete?'}
-                  </Typography>
+                  <DialogContentText>
+                     This will permenantly remove the word from your list
+                  </DialogContentText>
                </DialogContent>
                <DialogActions className={classes.dialogAction}>
                   <Button

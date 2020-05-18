@@ -28,10 +28,13 @@ class AddNewWordDialog extends Component {
          source: ''
       };
       this.addWord = this.addWord.bind(this);
+      this.closeDialog = this.closeDialog.bind(this);
+      this.clearForm = this.clearForm.bind(this);
    }
 
    addWord() {
       this.props.addWord({...this.state});
+      this.clearForm();
    }
 
    changeFormField = (e) => {
@@ -41,8 +44,21 @@ class AddNewWordDialog extends Component {
       });
    }
 
+   closeDialog() {
+      this.clearForm();
+      this.props.closeDialog();
+   }
+
+   clearForm() {
+      this.setState({
+         word: '',
+         meaning: '',
+         source: ''
+      });
+   }
+
    render() {
-      const {classes, open, closeDialog} = this.props;
+      const {classes, open} = this.props;
       return (
          <Dialog
             disableBackdropClick
@@ -50,7 +66,7 @@ class AddNewWordDialog extends Component {
             fullWidth
             maxWidth="xs"
             open={open}
-            onClose={closeDialog}
+            onClose={this.closeDialog}
             aria-labelledby="add-new-word-title"
          >
             <DialogTitle id="add-new-word-title">Fill in the form..</DialogTitle>
@@ -65,7 +81,7 @@ class AddNewWordDialog extends Component {
             <DialogActions className={classes.dialogAction}>
                <Button
                   variant="text"
-                  onClick={closeDialog}
+                  onClick={this.closeDialog}
                   color="primary"
                   className={classes.submit}
                >
