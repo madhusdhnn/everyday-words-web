@@ -2,7 +2,7 @@
 
 - Personal words app. Add new words you learn everyday to your personal words list.
 
-- Start using it from [here](https://everyday-words.web.app)
+- Start using it from [here](https://everyday-words.firebaseapp.com/)
 
 ## REQUIREMENTS
 
