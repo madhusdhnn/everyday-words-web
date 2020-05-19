@@ -32,7 +32,8 @@ const updateWord = (wordId, data) => {
       const firestore = getFirestore();
       const {uid} = getState().firebase.auth;
       dispatch(showSpinner());
-      firestore.collection('words').doc(wordId)
+      firestore.collection('words')
+         .doc(wordId)
          .update({
             ...data,
             userId: uid
