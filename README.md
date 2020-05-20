@@ -14,4 +14,3 @@
 - `npm install`
 - `npm start`
 
-Access the firebase console of the application from [here](https://console.firebase.google.com/project/everyday-words/overview)
