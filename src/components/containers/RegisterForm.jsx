@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Container, CssBaseline, Grid, Paper, TextField, Typography} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
-import compose from 'recompose/compose';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {register} from '../../actions/identity-actions';
-import styles from './AuthFormStyles';
+import withAuthFormStyles from '../hoc/withAuthFormStyles';
 
 class RegisterForm extends Component {
    constructor(props) {
@@ -25,7 +23,6 @@ class RegisterForm extends Component {
       this.changePassword = this.changePassword.bind(this);
       this.changeFirstName = this.changeFirstName.bind(this);
       this.changeLastName = this.changeLastName.bind(this);
-      this.clearForm = this.clearForm.bind(this);
    }
 
    changeEmail(e) {
@@ -80,7 +77,6 @@ class RegisterForm extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName
          });
-         this.clearForm();
       }
    }
 
@@ -212,10 +208,5 @@ const mapDispatchToProps = dispatch => {
    return bindActionCreators({register}, dispatch);
 };
 
-export default compose(
-   withStyles(styles, {
-      name: 'RegisterForm'
-   }),
-   connect(null, mapDispatchToProps)
-)(RegisterForm);
+export default connect(null, mapDispatchToProps)(withAuthFormStyles(RegisterForm, {name: 'RegisterForm'}));
 

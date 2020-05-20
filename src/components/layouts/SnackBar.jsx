@@ -42,10 +42,7 @@ class SnackBar extends Component {
             onClose={this.handleClose}
             className={classes.snackbar}
             TransitionComponent={this.slideTransition}
-            anchorOrigin={{
-               vertical: 'bottom',
-               horizontal: 'center'
-            }}
+            anchorOrigin={snackbar.anchorOrigin}
             action={
                <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
                   <CloseIcon fontSize="small" />

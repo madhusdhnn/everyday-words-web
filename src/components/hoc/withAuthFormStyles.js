@@ -1,4 +1,6 @@
-export default theme => ({
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = theme => ({
    paper: {
       marginTop: theme.spacing(5),
       padding: theme.spacing(2, 2),
@@ -26,3 +28,9 @@ export default theme => ({
       }
    }
 });
+
+export default (WrappedComponent, options = {name: 'AuthFormComponent'}) => {
+   return withStyles(styles, {
+      name: options.name
+   })(WrappedComponent);
+};

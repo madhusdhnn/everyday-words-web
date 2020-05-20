@@ -8,7 +8,7 @@ function ElevationScroll(props) {
       disableHysteresis: true,
       threshold: 0
    });
-   return React.cloneElement(children, {elevation: trigger ? 2 : 0});
+   return React.cloneElement(children, {elevation: trigger ? 3 : 0});
 }
 
 ElevationScroll.propTypes = {

@@ -1,5 +1,6 @@
 import {SET_WORD_ERROR} from './action-types';
 import {hideSpinner, showSpinner} from './spinner-actions';
+import {snackbarNotice} from './snackbar-actions';
 
 const setWordError = (err) => {
    return {
@@ -20,6 +21,7 @@ const addWord = (data) => {
             createdAt: new Date()
          })
          .then(() => dispatch(hideSpinner()))
+         .then(() => dispatch(snackbarNotice('Added to the list')))
          .catch(err => {
             dispatch(hideSpinner());
             dispatch(setWordError(err));
@@ -39,6 +41,7 @@ const updateWord = (wordId, data) => {
             userId: uid
          })
          .then(() => dispatch(hideSpinner()))
+         .then(() => dispatch(snackbarNotice('Updated successfully')))
          .catch(err => {
             dispatch(hideSpinner());
             dispatch(setWordError(err));
@@ -54,6 +57,7 @@ const deleteWord = (wordId) => {
          .doc(wordId)
          .delete()
          .then(() => dispatch(hideSpinner()))
+         .then(() => dispatch(snackbarNotice('Deleted from the list')))
          .catch(err => {
             dispatch(hideSpinner());
             dispatch(setWordError(err));

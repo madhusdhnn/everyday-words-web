@@ -1,23 +1,26 @@
-import {SNACKBAR_ERROR, SNACKBAR_WARNING, SNACKBAR_SUCCESS, REMOVE_SNACKBAR} from './action-types';
+import {REMOVE_SNACKBAR, SNACKBAR_ERROR, SNACKBAR_SUCCESS, SNACKBAR_WARNING} from './action-types';
 
-const snackbarWarning = message => {
+const snackbarWarning = (message, anchorOrigin = {vertical: 'bottom', horizontal: 'left'}) => {
    return {
       type: SNACKBAR_WARNING,
-      message: message
+      message: message,
+      anchorOrigin: anchorOrigin
    };
 };
 
-const snackbarError = message => {
+const snackbarError = (message, anchorOrigin = {vertical: 'bottom', horizontal: 'left'}) => {
    return {
       type: SNACKBAR_ERROR,
-      message: message
+      message: message,
+      anchorOrigin: anchorOrigin
    };
 };
 
-const snackbarNotice = message => {
+const snackbarNotice = (message, anchorOrigin = {vertical: 'bottom', horizontal: 'left'}) => {
    return {
       type: SNACKBAR_SUCCESS,
-      message: message
+      message: message,
+      anchorOrigin: anchorOrigin
    };
 };
 

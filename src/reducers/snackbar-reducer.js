@@ -1,11 +1,20 @@
-import {SNACKBAR_ERROR, SNACKBAR_WARNING, SNACKBAR_SUCCESS, REMOVE_SNACKBAR} from '../actions/action-types';
+import {REMOVE_SNACKBAR, SNACKBAR_ERROR, SNACKBAR_SUCCESS, SNACKBAR_WARNING} from '../actions/action-types';
 
-const snackbarReducer = (state = {open: false}, action) => {
+const defaultState = {
+   open: false,
+   anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'left'
+   }
+};
+
+const snackbarReducer = (state = defaultState, action) => {
    switch (action.type) {
    case SNACKBAR_ERROR:
       return {
          ...state,
          message: action.message,
+         anchorOrigin: action.anchorOrigin,
          type: 'error',
          open: true
       };
@@ -13,6 +22,7 @@ const snackbarReducer = (state = {open: false}, action) => {
       return {
          ...state,
          message: action.message,
+         anchorOrigin: action.anchorOrigin,
          type: 'warning',
          open: true
       };
@@ -20,11 +30,12 @@ const snackbarReducer = (state = {open: false}, action) => {
       return {
          ...state,
          message: action.message,
+         anchorOrigin: action.anchorOrigin,
          type: 'success',
          open: true
       };
    case REMOVE_SNACKBAR:
-      return {open: false};
+      return defaultState;
    default:
       return state;
    }

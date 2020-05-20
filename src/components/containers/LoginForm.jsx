@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import compose from 'recompose/compose';
 import {Button, Container, CssBaseline, Paper, TextField, Typography} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
 import {bindActionCreators} from 'redux';
 import {login} from '../../actions/identity-actions';
 import PropTypes from 'prop-types';
-import styles from './AuthFormStyles';
+import withAuthFormStyles from '../hoc/withAuthFormStyles';
 
 class LoginForm extends Component {
    constructor(props) {
@@ -19,7 +17,6 @@ class LoginForm extends Component {
       this.onSubmit = this.onSubmit.bind(this);
       this.changeEmail = this.changeEmail.bind(this);
       this.changePassword = this.changePassword.bind(this);
-      this.clearForm = this.clearForm.bind(this);
    }
 
    changeEmail(e) {
@@ -43,16 +40,7 @@ class LoginForm extends Component {
          });
       } else {
          this.props.login({email: this.state.email, password: this.state.password});
-         this.clearForm();
       }
-   }
-
-   clearForm() {
-      this.setState({
-         email: '',
-         password: '',
-         errorPassword: false
-      });
    }
 
    render() {
@@ -127,12 +115,4 @@ const mapDispatchToProps = dispatch => {
    return bindActionCreators({login}, dispatch);
 };
 
-export default compose(
-   withStyles(styles, {
-      name: 'LoginForm'
-   }),
-   connect(
-      null,
-      mapDispatchToProps
-   )
-)(LoginForm);
+export default connect(null, mapDispatchToProps)(withAuthFormStyles(LoginForm, {name: 'LoginForm'}));
