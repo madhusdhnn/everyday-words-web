@@ -80,18 +80,6 @@ class RegisterForm extends Component {
       }
    }
 
-   clearForm() {
-      this.setState({
-         email: '',
-         password: '',
-         firstName: '',
-         lastName: '',
-         errorPassword: false,
-         errorFirstName: false,
-         errorLastName: false
-      });
-   }
-
    render() {
       const {classes, identity} = this.props;
       return (
