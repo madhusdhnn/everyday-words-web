@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Create, Delete} from '@material-ui/icons';
 import {red} from '@material-ui/core/colors';
 import {
    Button,
@@ -11,7 +10,6 @@ import {
    DialogTitle,
    Divider,
    Grid,
-   IconButton,
    Link,
    Paper,
    Typography
@@ -19,6 +17,7 @@ import {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import EditWordDialog from './WordDialog';
+import WordActions from './WordActions';
 
 const styles = theme => ({
    paper: {
@@ -46,12 +45,6 @@ const styles = theme => ({
    word: {
       padding: theme.spacing(1.5, 0),
       textTransform: 'capitalize',
-   },
-   delete: {
-      color: theme.palette.error.main
-   },
-   edit: {
-      color: theme.palette.primary.main
    },
    text: {
       fontSize: theme.spacing(2)
@@ -87,13 +80,6 @@ class WordList extends Component {
       this.closeDeleteConfirmDialog();
    }
 
-   openDeleteConfirmDialog(wordId) {
-      this.setState({
-         wordId: wordId,
-         openConfirmDialog: true
-      });
-   }
-
    closeDeleteConfirmDialog() {
       this.setState({
          wordId: '',
@@ -101,8 +87,17 @@ class WordList extends Component {
       });
    }
 
-   openEditFormDialog(word) {
-      this.setState({
+   openDeleteConfirmDialog = (wordId) => {
+      const that = this;
+      that.setState({
+         wordId: wordId,
+         openConfirmDialog: true
+      });
+   }
+
+   openEditFormDialog = (word) => {
+      const that = this;
+      that.setState({
          wordId: word.id,
          word: word.word,
          meaning: word.meaning,
@@ -147,24 +142,11 @@ class WordList extends Component {
                               </Typography>
                            </Grid>
                            <Grid item xs={4} sm={4} md={4} lg={3}>
-                              <Grid container spacing={1}>
-                                 <Grid item xs={6}>
-                                    <IconButton
-                                       className={classes.edit}
-                                       onClick={this.openEditFormDialog.bind(this, word)}
-                                    >
-                                       <Create />
-                                    </IconButton>
-                                 </Grid>
-                                 <Grid item xs={6}>
-                                    <IconButton
-                                       className={classes.delete}
-                                       onClick={this.openDeleteConfirmDialog.bind(this, word.id)}
-                                    >
-                                       <Delete />
-                                    </IconButton>
-                                 </Grid>
-                              </Grid>
+                              <WordActions
+                                 word={word}
+                                 editAction={this.openEditFormDialog}
+                                 deleteAction={this.openDeleteConfirmDialog}
+                              />
                            </Grid>
                         </Grid>
                         <Divider style={{marginBottom: 16}} />
