@@ -80,12 +80,12 @@ class NavBar extends Component {
    }
 
    getFullName(user) {
-      return `${user.firstName} ${user.lastName}`;
+      return user ? `${user.firstName} ${user.lastName}` : '';
    }
 
    render() {
       const {classes, auth, users} = this.props;
-      const fullName = this.getFullName(users ? users.find(u => u.id === auth.uid) : {});
+      const fullName = this.getFullName(users ? users.find(u => u.id === auth.uid) : null);
 
       return (
          <div className={classes.root}>
