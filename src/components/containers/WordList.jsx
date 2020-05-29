@@ -28,11 +28,9 @@ const styles = theme => ({
       }
    },
    cancelActionBtn: {
-      margin: theme.spacing(3, 0),
       color: theme.palette.text.secondary
    },
    deleteActionBtn: {
-      margin: theme.spacing(3, 0),
       color: theme.palette.common.white,
       backgroundColor: red[500],
       '&:hover': {
@@ -40,7 +38,7 @@ const styles = theme => ({
       }
    },
    dialogAction: {
-      padding: theme.spacing(1, 3)
+      padding: theme.spacing(1, 3, 2, 3)
    },
    word: {
       padding: theme.spacing(1.5, 0),
@@ -151,7 +149,7 @@ class WordList extends Component {
                         </Grid>
                         <Divider style={{marginBottom: 16}} />
                         <Grid container spacing={3}>
-                           <Grid item xs={4} sm={2} md={3} lg={3}>
+                           <Grid item xs={4} sm={2} md={3} lg={4}>
                               <Typography
                                  variant="body2"
                                  className={classes.text}
@@ -160,7 +158,7 @@ class WordList extends Component {
                                  Meaning:
                               </Typography>
                            </Grid>
-                           <Grid item xs={8} sm={10} md={9} lg={9}>
+                           <Grid item xs={8} sm={10} md={9} lg={8}>
                               <Typography
                                  variant="body2"
                                  className={classes.text}
@@ -229,7 +227,7 @@ class WordList extends Component {
                <DialogTitle id="delete-word-title">Delete Word</DialogTitle>
                <DialogContent>
                   <DialogContentText>
-                     This will permenantly remove the word from your list
+                     This will permanently remove the word from your list
                   </DialogContentText>
                </DialogContent>
                <DialogActions className={classes.dialogAction}>
