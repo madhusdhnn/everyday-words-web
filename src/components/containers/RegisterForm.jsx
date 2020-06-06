@@ -14,6 +14,7 @@ class RegisterForm extends Component {
          password: '',
          firstName: '',
          lastName: '',
+         errorEmail: false,
          errorPassword: false,
          errorFirstName: false,
          errorLastName: false
@@ -27,7 +28,8 @@ class RegisterForm extends Component {
 
    changeEmail(e) {
       this.setState({
-         email: e.target.value
+         email: e.target.value,
+         errorEmail: false
       });
    }
 
@@ -54,6 +56,12 @@ class RegisterForm extends Component {
 
    onSubmit(e) {
       e.preventDefault();
+      if (!this.state.email) {
+         this.setState({
+            errorEmail: true
+         });
+      }
+
       if (!this.state.password) {
          this.setState({
             errorPassword: true
@@ -137,11 +145,11 @@ class RegisterForm extends Component {
                         <TextField
                            fullWidth
                            required
-                           error={!!identity.message}
+                           error={!!identity.message || this.state.errorEmail}
                            value={this.state.email}
                            onChange={this.changeEmail}
                            className={classes.formField}
-                           helperText={identity.message ? identity.message : ''}
+                           helperText={`${this.state.errorEmail ? 'Please type some text' : ''}`}
                            type="email"
                            variant="outlined"
                            margin="normal"
@@ -154,11 +162,11 @@ class RegisterForm extends Component {
                         <TextField
                            fullWidth
                            required
-                           error={this.state.errorPassword}
+                           error={!!identity.message || this.state.errorPassword}
                            value={this.state.password}
                            onChange={this.changePassword}
                            className={classes.formField}
-                           helperText={this.state.errorPassword ? 'Please enter some text' : ''}
+                           helperText={`${this.state.errorPassword ? 'Please type some text' : ''}`}
                            type="password"
                            variant="outlined"
                            margin="normal"
@@ -178,6 +186,16 @@ class RegisterForm extends Component {
                   >
                      Sign Up
                   </Button>
+                  {
+                     !!identity.message
+                        ?
+                        (
+                           <Typography paragraph variant="body1" color="error">
+                              Error: {identity.message}
+                           </Typography>
+                        )
+                        : ''
+                  }
                </form>
             </Paper>
          </Container>
