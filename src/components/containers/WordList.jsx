@@ -168,7 +168,7 @@ class WordList extends Component {
                            </Grid>
                         </Grid>
                         <Grid container spacing={3}>
-                           <Grid item xs={4} sm={2} md={3} lg={3}>
+                           <Grid item xs={4} sm={2} md={3} lg={4}>
                               <Typography
                                  variant="body2"
                                  className={classes.text}
@@ -177,7 +177,7 @@ class WordList extends Component {
                                  Source:
                               </Typography>
                            </Grid>
-                           <Grid item xs={8} sm={10} md={9} lg={9}>
+                           <Grid item xs={8} sm={10} md={9} lg={8}>
                               {
                                  WordList.urlLike(word.source)
                                     ? (
