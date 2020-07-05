@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => {
    return bindActionCreators({addWord, updateWord, deleteWord}, dispatch);
 };
 
-const mapCollectionToProps = () => [{collection: 'words'}];
+const mapCollectionToProps = () => [{collection: 'words', orderBy: ['createdAt', 'desc']}];
 
 export default compose(
    withStyles(styles, {

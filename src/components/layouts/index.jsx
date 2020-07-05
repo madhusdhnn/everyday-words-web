@@ -7,7 +7,7 @@ import SnackBar from './SnackBar';
 import NavBar from './NavBar';
 import Auth from '../containers/Auth';
 
-const generateClassName = createGenerateClassName({disableGlobal: true, productionPrefix: 'ewd-ttm'});
+const generateClassName = createGenerateClassName({disableGlobal: process.env.NODE_ENV === 'production', productionPrefix: 'ewd-ttm'});
 
 const style = {width: '100%', marginBottom: 10};
 
