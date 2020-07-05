@@ -69,7 +69,7 @@ class Dashboard extends Component {
 
       if (searchText) {
          const regex = new RegExp(searchText, 'gi');
-         wordsOfCurrentUser = words.filter(word => word.word.match(regex));
+         wordsOfCurrentUser = wordsOfCurrentUser.filter(word => word.word.match(regex));
       }
 
       return (
