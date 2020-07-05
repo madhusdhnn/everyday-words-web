@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, CssBaseline, Typography} from '@material-ui/core';
+import {Box, Container, CssBaseline, InputAdornment, TextField, Typography} from '@material-ui/core';
 import {connect} from 'react-redux';
 import {addWord, deleteWord, updateWord} from '../../actions/words-actions';
 import compose from 'recompose/compose';
@@ -9,6 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {bindActionCreators} from 'redux';
 import WordList from './WordList';
 import noData from '../../static/images/no-data.png';
+import {Search} from '@material-ui/icons';
 
 const styles = theme => ({
    root: {
@@ -30,28 +31,71 @@ const styles = theme => ({
    image: {
       height: theme.spacing(20),
       width: 'auto',
+   },
+   searchBar: {
+      width: '70%',
+      [theme.breakpoints.down('md')]: {
+         width: '87%',
+         '& > *': {
+            width: '100%'
+         }
+      }
    }
 });
 
 class Dashboard extends Component {
+   constructor(props) {
+      super(props);
+      this.state = {
+         searchText: ''
+      };
+      this.changeSearchText = this.changeSearchText.bind(this);
+   }
+
+   changeSearchText(e) {
+      this.setState({
+         searchText: e.target.value
+      });
+   }
+
    render() {
       const {classes, words, auth} = this.props;
       if (!words) {
          return (<React.Fragment />);
-      } else if (words.length === 0) {
       }
-      const wordsOfCurrentUser = words.filter(word => word.userId === auth.uid);
+
+      const {searchText} = this.state;
+      let wordsOfCurrentUser = words.filter(word => word.userId === auth.uid);
+
+      if (searchText) {
+         const regex = new RegExp(searchText, 'gi');
+         wordsOfCurrentUser = words.filter(word => word.word.match(regex));
+      }
 
       return (
          <Container component="div" maxWidth="lg" className={classes.root}>
             <CssBaseline />
+            <Box m={3} className={classes.searchBar}>
+               <TextField
+                  id="word-search-bat"
+                  placeholder="Search your words.."
+                  onChange={this.changeSearchText}
+                  InputProps={{
+                     startAdornment: (
+                        <InputAdornment color="primary" position="start">
+                           <Search />
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+            </Box>
             {
                wordsOfCurrentUser.length === 0
                   ? (
                      <Container component="div" maxWidth="xs" className={classes.imageContainer}>
                         <img src={noData} alt="No Data Pad" className={classes.image} />
                         <Typography style={{marginTop: 16}} paragraph variant="body2">
-                           Your account is ready to go. Just add words.
+                           There are no words.
                         </Typography>
                      </Container>
                   )
