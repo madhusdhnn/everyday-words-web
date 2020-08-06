@@ -224,7 +224,7 @@ class WordList extends Component {
                onClose={this.closeDeleteConfirmDialog}
                aria-labelledby="delete-word-title"
             >
-               <DialogTitle id="delete-word-title">Delete Word</DialogTitle>
+               <DialogTitle id="delete-word-title">Do you really want to delete the word?</DialogTitle>
                <DialogContent>
                   <DialogContentText>
                      This will permanently remove the word from your list
@@ -236,14 +236,14 @@ class WordList extends Component {
                      onClick={this.closeDeleteConfirmDialog}
                      className={classes.cancelActionBtn}
                   >
-                     cancel
+                     keep it
                   </Button>
                   <Button
                      variant="contained"
                      onClick={this.deleteWord}
                      className={classes.deleteActionBtn}
                   >
-                     delete
+                     yes, delete
                   </Button>
                </DialogActions>
             </Dialog>
